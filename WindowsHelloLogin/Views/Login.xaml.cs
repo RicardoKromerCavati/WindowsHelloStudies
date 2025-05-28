@@ -48,7 +48,7 @@ namespace WindowsHelloLogin.Views
             }
         }
 
-        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             ErrorMessage.Text = "";
             await SignInWindowsHelloAsync();
