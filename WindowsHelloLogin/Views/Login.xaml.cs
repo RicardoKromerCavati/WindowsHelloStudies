@@ -7,11 +7,14 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using WindowsHelloLogin.Models;
 using WindowsHelloLogin.Utils;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -24,6 +27,7 @@ namespace WindowsHelloLogin.Views
     /// </summary>
     public sealed partial class Login : Page
     {
+        private Account _account;
         public Login()
         {
             this.InitializeComponent();
@@ -52,6 +56,25 @@ namespace WindowsHelloLogin.Views
         private void RegisterButtonTextBlock_OnPointerPressed(object sender, PointerRoutedEventArgs e)
         {
             ErrorMessage.Text = "";
+        }
+
+        private async Task SignInWindowsHelloAsync()
+        {
+            if (AccountHelper.ValidateAccountCredentials(UsernameTextBox.Text))
+            {
+                // Create and add a new local account
+                _account = AccountHelper.AddAccount(UsernameTextBox.Text);
+                Debug.WriteLine("Successfully signed in with traditional credentials and created local account instance!");
+
+                //if (await WindowsHelloHelper.CreateWindowsHelloKeyAsync(UsernameTextBox.Text))
+                //{
+                //    Debug.WriteLine("Successfully signed in with Windows Hello!");
+                //}
+            }
+            else
+            {
+                ErrorMessage.Text = "Invalid Credentials";
+            }
         }
     }
 }
