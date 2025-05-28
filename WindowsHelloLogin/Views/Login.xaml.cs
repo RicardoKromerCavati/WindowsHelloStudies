@@ -51,6 +51,8 @@ namespace WindowsHelloLogin.Views
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             ErrorMessage.Text = "";
+            await SignInWindowsHelloAsync();
+
         }
 
         private void RegisterButtonTextBlock_OnPointerPressed(object sender, PointerRoutedEventArgs e)
@@ -66,10 +68,10 @@ namespace WindowsHelloLogin.Views
                 _account = AccountHelper.AddAccount(UsernameTextBox.Text);
                 Debug.WriteLine("Successfully signed in with traditional credentials and created local account instance!");
 
-                //if (await WindowsHelloHelper.CreateWindowsHelloKeyAsync(UsernameTextBox.Text))
-                //{
-                //    Debug.WriteLine("Successfully signed in with Windows Hello!");
-                //}
+                if (await WindowsHelloHelper.CreateWindowsHelloKeyAsync(UsernameTextBox.Text))
+                {
+                    Debug.WriteLine("Successfully signed in with Windows Hello!");
+                }
             }
             else
             {
